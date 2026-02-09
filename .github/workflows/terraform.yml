@@ -20,6 +20,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: Terraform/AWS/ec2_Jenkins
 
     steps:
     # Checkout the repository to the GitHub Actions runner
@@ -39,9 +40,6 @@ jobs:
       with:
         # Remove cli_config_credentials_token - OIDC will handle auth automatically
         terraform_version: latest
-
-    - name: working directory
-      run: cd Terraform/AWS/ec2_Jenkins
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
