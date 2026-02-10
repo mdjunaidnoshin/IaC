@@ -56,5 +56,5 @@ variable "user_data_script" {
 variable "subnet_id" {
   type        = string
   description = "The subnet ID where the EC2 instance will be placed. If not provided, uses the first default VPC subnet"
-  default     = ""
+  default     = null
 }
