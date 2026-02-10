@@ -1,7 +1,7 @@
 variable "ami_id" {
   type        = string
   description = "The AMI ID for the EC2 instance"
-  default     = "ami-087d1c9a513324697" # Ubuntu Server 22.04 LTS (HVM), SSD Volume Type
+  default     = "ami-0848881f2a3dcebd1" # Ubuntu Server 22.04 LTS (HVM), SSD Volume Type
 }
 
 variable "instance_type" {
