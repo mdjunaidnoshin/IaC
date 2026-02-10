@@ -52,3 +52,9 @@ variable "user_data_script" {
               echo "Jenkins initial admin password will be available in /var/lib/jenkins/secrets/initialAdminPassword"
               EOF
 }
+
+variable "subnet_id" {
+  type        = string
+  description = "The subnet ID where the EC2 instance will be placed. If not provided, uses the first default VPC subnet"
+  default     = ""
+}
