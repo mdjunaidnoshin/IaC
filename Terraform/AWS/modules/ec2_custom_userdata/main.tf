@@ -29,7 +29,7 @@ resource "aws_subnet" "private" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.private_subnet_cidr
   availability_zone       = var.availability_zone
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch = true
 
   tags = merge(
     var.tags,
@@ -102,10 +102,10 @@ resource "aws_security_group" "vpc_endpoints" {
 
   # Inbound: Allow HTTPS from EC2 security group
   ingress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    security_groups = [aws_security_group.ec2.id]
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = ["0.0.0.0/0"]
   }
 
   # Outbound: Allow all traffic
@@ -218,7 +218,7 @@ resource "aws_instance" "my_instance" {
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.private.id
   vpc_security_group_ids      = [aws_security_group.ec2.id]
-  associate_public_ip_address = false
+  associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.ec2_profile.name
   user_data                   = base64encode(var.user_data_script)
 
