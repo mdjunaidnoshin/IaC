@@ -25,7 +25,7 @@ variable "availability_zone" {
 variable "ami_id" {
   type        = string
   description = "The AMI ID for the EC2 instance"
-  default     = "ami-0848881f2a3dcebd1" # Ubuntu Server 22.04 LTS (HVM), SSD Volume Type
+  default     = "ami-0f971641e591e3e98" # Amazon Linux 2023
 }
 
 variable "instance_type" {
@@ -44,27 +44,23 @@ variable "tags" {
 
 variable "user_data_script" {
   type        = string
-  description = "User data script to install and configure Jenkins on Ubuntu"
+  description = "User data script to install and configure Jenkins on Amazon Linux"
   default     = <<-EOF
               #!/bin/bash
               set -e
               
               # Update system packages
-              apt-get update
-              apt-get upgrade -y
+              yum update -y
               
               # Install Java (Jenkins requires Java)
-              apt-get install -y fontconfig openjdk-17-jre-headless
+              yum install -y java-17-amazon-corretto java-17-amazon-corretto-devel
               
               # Add Jenkins repository
-              curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-              echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-              
-              # Update package manager with Jenkins repo
-              apt-get update
+              wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+              rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
               
               # Install Jenkins
-              apt-get install -y jenkins
+              yum install -y jenkins
               
               # Enable Jenkins to start on boot
               systemctl enable jenkins
