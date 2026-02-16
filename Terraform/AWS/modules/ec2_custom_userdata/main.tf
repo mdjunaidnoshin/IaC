@@ -32,14 +32,6 @@ resource "aws_security_group" "ec2" {
   description = "Security group for EC2 instance in private subnet"
   vpc_id      = aws_vpc.main.id
 
-  # Inbound: Allow HTTPS from self for VPC endpoints
-  ingress {
-    from_port       = 443
-    to_port         = 443
-    protocol        = "tcp"
-    security_groups = [aws_security_group.ec2.id]
-  }
-
   # Outbound: Allow all traffic to external resources
   egress {
     from_port   = 0
@@ -54,6 +46,16 @@ resource "aws_security_group" "ec2" {
       Name = "${var.environment}-ec2-sg"
     }
   )
+}
+
+# Allow HTTPS inbound from self for VPC endpoints
+resource "aws_security_group_rule" "ec2_self_ingress" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.ec2.id
+  self              = true
 }
 
 # Security Group for VPC Endpoints
