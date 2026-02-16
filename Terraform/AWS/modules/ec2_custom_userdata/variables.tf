@@ -1,3 +1,27 @@
+variable "environment" {
+  type        = string
+  description = "Environment name (e.g., dev, prod)"
+  default     = "dev"
+}
+
+variable "vpc_cidr" {
+  type        = string
+  description = "CIDR block for the VPC"
+  default     = "10.0.0.0/16"
+}
+
+variable "private_subnet_cidr" {
+  type        = string
+  description = "CIDR block for the private subnet where EC2 will be deployed"
+  default     = "10.0.1.0/24"
+}
+
+variable "availability_zone" {
+  type        = string
+  description = "Availability Zone for the subnet"
+  default     = "ap-south-1a"
+}
+
 variable "ami_id" {
   type        = string
   description = "The AMI ID for the EC2 instance"
@@ -55,6 +79,6 @@ variable "user_data_script" {
 
 variable "subnet_id" {
   type        = string
-  description = "The subnet ID where the EC2 instance will be placed. If not provided, uses the first default VPC subnet"
+  description = "The subnet ID where the EC2 instance will be placed. If not provided, uses the module's private subnet"
   default     = null
 }

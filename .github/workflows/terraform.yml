@@ -49,7 +49,6 @@ jobs:
     - name: Setup Terraform with OIDC
       uses: hashicorp/setup-terraform@v3
       with:
-        # Remove cli_config_credentials_token - OIDC will handle auth automatically
         terraform_version: latest
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
