@@ -102,10 +102,10 @@ resource "aws_security_group" "vpc_endpoints" {
 
   # Inbound: Allow HTTPS from EC2 security group
   ingress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    security_groups = ["0.0.0.0/0"]
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [aws_security_group.ec2.id]
   }
 
   # Outbound: Allow all traffic
